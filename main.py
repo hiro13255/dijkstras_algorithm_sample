@@ -1,8 +1,8 @@
 import math
 
-#key返却関数
-def get_key_value(cost, processed_node):
-    return [k for k, v in cost.items() if v == processed_node]
+#移動先ノード取得関数
+def get_next_node_name(cost, now_cost):
+    return [k for k, v in cost.items() if v == now_cost]
 
 #　コストが小さいKeyを算出する関数
 def get_taget_node(cost, prev):
@@ -13,7 +13,7 @@ def get_taget_node(cost, prev):
     now_cost = cost[target_list[0]]
     for key in target_list[1:]:
         now_cost = min([now_cost, cost[key]])
-    return get_key_value(cost, now_cost)
+    return get_next_node_name(cost, now_cost)
 
 # ダイクストラ法のアルゴリズム
 def dijkstras(graph):
@@ -46,8 +46,9 @@ def dijkstras(graph):
             processed_node.append(node)
     return cost, prev_node
 
-#最短経路算出関数
+#並び替え関数
 def short_root(prev):
+    #最短経路算出後はGから経路をたどる必要があるため、Sから始まるように並び替えをしている
     root = ['G']
     now = 'G'
     while now != 'S':
